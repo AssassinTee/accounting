@@ -1,4 +1,5 @@
 package application.accounting;
+import java.util.*;
 
 public class Mitglied {
 	private String m_Nachname;
@@ -37,7 +38,7 @@ public class Mitglied {
 		return l_Beitrag.get(index).getDay();
 	}
 	
-	public int getAmount(int index) {
+	public double getAmount(int index) {
 		return l_Beitrag.get(index).getAmount();
 	}
 	

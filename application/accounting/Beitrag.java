@@ -1,4 +1,5 @@
 package application.accounting;
+import java.util.*;
 
 public class Beitrag {
 	private int m_Tag;
