@@ -6,6 +6,7 @@ public class Mitglied {
 	private String m_Vorname;
 	private String m_Mitgliedsnummer;
 	private List<Beitrag> l_Beitrag;
+	public double zins = 0.005;
 	
 	public Mitglied(String Nachname, String Vorname, String Mitgliedsnummer) {
 		m_Nachname = Nachname;
@@ -48,5 +49,13 @@ public class Mitglied {
 	
 	public void changeNN(String Nachname) {
 		m_Nachname = Nachname;
-	}	
+	}
+	
+	public void rechneab(){
+		for(int i = 0; i < l_Beitrag.size(); i++) {
+			Beitrag l = l_Beitrag.get(i);
+			l.setAmount(l.getAmount() * ( zins * (360-l.getDay()) /36000 +1 ));
+			l.setDay(0);
+		}
+	}
 }

@@ -14,7 +14,15 @@ public class Beitrag {
 		return m_Tag;
 	}
 	
+	public void setDay(int day) {
+		m_Tag = day;
+	}
+	
 	public double getAmount() {
 		return m_Betrag;
+	}
+	
+	public void setAmount(double amount) {
+		m_Betrag = amount;
 	}
 }
