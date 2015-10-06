@@ -5,11 +5,19 @@ import java.lang.StringBuffer;
 
 public class Kasse {
 	private File m_source;
+	private List<Mitglied> l_member;
+	
 	public Kasse(File f) {
 		m_source = f;
+		l_member = new ArrayList<Mitglied>();
+		System.out.println("Die Datei "+m_source+" wurde mit "+init(m_source)+" Fehlern eingelesen");
 	}
 	
-	public boolean Einzahlen(String mitgliedsnummer, int betrag, int tag){
+	public boolean add(Mitglied m) {
+		return l_member.add(m);
+	}
+	
+	public int init(File f) throws FileNotFoundException {
 		BufferedReader sc = null;
 		try {
 			sc = new BufferedReader(new FileReader(m_source));
@@ -18,48 +26,59 @@ public class Kasse {
 			e.printStackTrace();
 			return false;
 		}
-		System.out.println("Ich war hier!");
-		String linebuffer = " ";
-		StringBuffer sb = new StringBuffer("");
-		while(true) {
-			try{
-				linebuffer = sc.readLine();
-			} catch(IOException e) {
-				e.printStackTrace();
-			}
-			if(linebuffer == null){
-				break;
-			}
-			sb.append(linebuffer+"\n");
-			System.out.println(linebuffer);
-			if(linebuffer.split(";")[0].contains(mitgliedsnummer)){
-				System.out.println("Ich war hier!5");
-				linebuffer += ";"+tag+","+betrag;
-				sb.append(linebuffer);
-				while(true){
-					try{
-						linebuffer = sc.readLine();
-					} catch(IOException e){
-						e.printStackTrace();
+		int numerrors = 0;
+		String linebuffer = sc.readLine();
+		while(linebuffer != null){
+			if(linebuffer.charAt(0) != '#'){
+				String data[] = linebuffer.split(";");
+				if(data.length >= 4){
+					Mitglied m = new Mitglied(data[1], data[2], data[0])
+					for(int i = 3; i < data.length; i++){
+						String subdata[] = data[i].split(",");
+						if(subdata.length <= 1) {
+							numerrors++;
+							continue;
+						}
+						m.add(subdata[0], subdata[1]);
 					}
-					if(linebuffer == null){
-						break;
-					}
-					sb.append(linebuffer+"\n");
 				}
-				System.out.println("7:"+sb.toString());
-				try {
-					System.out.println(" ");
-					FileWriter fw = new FileWriter(m_source);
-					fw.write(sb.toString());
-				} catch(IOException e) {
-					e.printStackTrace();
+				else {
+					numerrors++;
 				}
-				return true;
+			}
+			linebuffer = sc.readLine();
+		}
+		return numerrors
+	}
+	
+	public void putMoney(String MN, int day, double amount) {
+		for(int i = 0; i < l_member.length; i++){
+			if(l_member.get(i).getMN().equals(MN)) {
+				l_member.get(i).add(day, amount);
+				return;
 			}
 		}
-		return false;
 	}
+	
+	public boolean save(File f, boolean reset) throws FileNotFoundException {
+		try {
+			FileWriter fw = new FileWriter(f, false);
+			BufferedWriter bw = new BufferedWriter(fw);
+			for(int i = 0; i < l_member.size(); i++) {
+				Mitglied m = l_member.get(i);
+				bw.write(m.getMN()+";"+m.getNN()+";"+m.getVN())
+				for(int j = 0; j < m.size(); j++) {
+					bw.write(";"+m.getDay(j)+","+m.getAmount(j));
+				}
+				bw.newLine();
+			}
+			bw.close();
+			return true;
+		} catch (IOException e) {
+			throw new FileNotFoundException(e.getMessage());
+		}
+	}
+	
 	public static void main(String argv[]){
 		Kasse a = new Kasse(new File("data/mitglieder.xml"));
 		a.Einzahlen("013579", 20, 40); 
