@@ -1,3 +1,6 @@
 #ausgeschlossene ordner
-~/project/accounting/src/application/
-~/project/.gitignore~
+
+*~
+build/
+.ant*
+dist/
