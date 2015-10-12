@@ -1,2 +1,3 @@
 #ausgeschlossene ordner
-~/project/accounting/src/application
+~/project/accounting/src/application/
+~/project/.gitignore~
