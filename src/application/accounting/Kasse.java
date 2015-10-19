@@ -1,9 +1,15 @@
 package application.accounting;
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
 import java.lang.StringBuffer;
 
+import java.util.logging.*;
+
 public class Kasse {
+
+	private static final Logger logger = Logger.getLogger(Kasse.class.getName());
+	
+	
 	private File m_source;
 	public Kasse(File f) {
 		m_source = f;
@@ -13,17 +19,19 @@ public class Kasse {
 		BufferedReader sc = null;
 		try {
 			sc = new BufferedReader(new FileReader(m_source));
+			logger.info("lese von Datei: " + m_source);
+			
 		} catch (FileNotFoundException e) {
 			System.out.println("Es konnte nicht Eingezahlt werden");
 			e.printStackTrace();
 			return false;
 		}
-		System.out.println("Ich war hier!");
 		String linebuffer = " ";
 		StringBuffer sb = new StringBuffer("");
 		while(true) {
 			try{
 				linebuffer = sc.readLine();
+				logger.info("gelesene Zeile: "+ linebuffer);
 			} catch(IOException e) {
 				e.printStackTrace();
 			}
@@ -61,6 +69,28 @@ public class Kasse {
 		return false;
 	}
 	public static void main(String argv[]){
+		
+		if(argv.length == 0) {
+			ArgParser ag = new ArgParser(argv);
+				try {
+				boolean append = true;
+				FileHandler fh = new FileHandler(ag.getLogFilename(), append);
+				fh.setFormatter(new Formatter() {
+					public String format(LogRecord rec) {
+						StringBuffer buf = new StringBuffer(1000);
+						buf.append(new java.util.Date()).append('_');
+						buf.append(rec.getLevel()).append('_');
+						buf.append(formatMessage(rec)).append('\n');
+						return buf.toString();
+					}
+				});
+				logger.addHandler(fh);
+			} catch (IOException e) {
+				logger.severe("Datei kann nicht geschrieben werden");
+				e.printStackTrace();
+			}
+		}
+		logger.info("started logging");
 		Kasse a = new Kasse(new File("data/mitglieder.xml"));
 		a.Einzahlen("013579", 20, 40); 
 	}
