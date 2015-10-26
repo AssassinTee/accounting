@@ -1,6 +1,9 @@
 package application.accounting;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 import java.lang.StringBuffer;
 
 import java.util.logging.*;
@@ -11,15 +14,20 @@ public class Kasse {
 	
 	
 	private File m_source;
-	public Kasse(File f) {
+	private File m_destination;
+	String baseName = "Accounting";
+	ResourceBundle rb = ResourceBundle.getBundle(baseName);
+	public Kasse(File f, File dest) {
 		m_source = f;
+		m_destination = dest;
 	}
 	
 	public boolean Einzahlen(String mitgliedsnummer, int betrag, int tag){
 		BufferedReader sc = null;
 		try {
 			sc = new BufferedReader(new FileReader(m_source));
-			logger.info("lese von Datei: " + m_source);
+			String readinput_msg = rb.getString("readinput_msg");
+			logger.info(readinput_msg + ": " + m_source);
 			
 		} catch (FileNotFoundException e) {
 			System.out.println("Es konnte nicht Eingezahlt werden");
@@ -38,33 +46,27 @@ public class Kasse {
 			if(linebuffer == null){
 				break;
 			}
-			sb.append(linebuffer+"\n");
-			System.out.println(linebuffer);
+			//sb.append(linebuffer+"\n");
+			//System.out.println(linebuffer);
 			if(linebuffer.split(";")[0].contains(mitgliedsnummer)){
-				System.out.println("Ich war hier!5");
 				linebuffer += ";"+tag+","+betrag;
 				sb.append(linebuffer);
-				while(true){
-					try{
-						linebuffer = sc.readLine();
-					} catch(IOException e){
-						e.printStackTrace();
-					}
-					if(linebuffer == null){
-						break;
-					}
-					sb.append(linebuffer+"\n");
-				}
-				System.out.println("7:"+sb.toString());
-				try {
-					System.out.println(" ");
-					FileWriter fw = new FileWriter(m_source);
-					fw.write(sb.toString());
-				} catch(IOException e) {
-					e.printStackTrace();
-				}
-				return true;
+
+				//System.out.println(sb.toString());
+				
 			}
+			else {
+				sb.append(linebuffer+"\n");
+			}
+			
+			try {
+				//System.out.println(" ");
+				FileWriter fw = new FileWriter(m_destination);
+				fw.write(sb.toString());
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+			return true;
 		}
 		return false;
 	}
@@ -91,7 +93,7 @@ public class Kasse {
 			}
 		}
 		logger.info("started logging");
-		Kasse a = new Kasse(new File("data/mitglieder.xml"));
+		Kasse a = new Kasse(new File(argv[1]), new File(argv[3]));
 		a.Einzahlen("013579", 20, 40); 
 	}
 }
