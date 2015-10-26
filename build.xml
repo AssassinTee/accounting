@@ -16,9 +16,23 @@
         basedir="build/classes"/>
   </target>
 
-  <target name="clean" depends="init">
+  <target name="delete-dirs-carefully" depends="delete-language-links">
     <delete dir="build"/>
     <delete dir="dist"/>
+  </target>
+  
+  <!-- tests if the links are set -->
+  <target name="test-remove-language-links">
+    <condition property="isADir">
+      <available file="./dist/data/lang" type="dir"/>
+    </condition>
+  </target>
+  
+  <!-- remove the link if it is not done yet -->
+  <target name="delete-language-links" depends="test-remove-language-links" if="isADir">
+    <exec executable="rm" error="/dev/null" os="Linux">
+      <arg file="./dist/data/lang"/>
+    </exec>
   </target>
   
   <target name ="execute" depends="compile">
@@ -45,5 +59,27 @@
       <arg line="--input-file ./src/data/mitglieder.xml -o ./src/data/mitglieder.xml.new -l ./src/data/test.csv.log 0.05" />
     </java>
   </target>
-
+  
+  <target name="create-dirs">
+    <mkdir dir="build/classes/packages/de"/>
+    <mkdir dir="dist/data"/>
+  </target>
+  
+  <target name="test-set-language-links" depends="create-dirs">
+    <condition property="isNotALangDir">
+      <not>
+	<available file="./dist/data/lang" type="dir" />
+      </not>
+    </condition>
+  </target>
+  
+  <target name="create-language-links" depends="test-set-language-links" if="isNotALangDir">
+    <exec executable="ln" error="/dev/null" os="Linux">
+      <arg line="-sn"/>  
+      <!-- n: prohibits endless/de/de/... chains -->
+      <arg file="./src/data/lang"/>
+      <arg file="./dist/data/lang"/>
+    </exec>
+  </target>
+	  
 </project>

@@ -15,7 +15,7 @@ public class Kasse {
 	
 	private File m_source;
 	private File m_destination;
-	String baseName = "Accounting";
+	String baseName = "Kasse";
 	ResourceBundle rb = ResourceBundle.getBundle(baseName);
 	public Kasse(File f, File dest) {
 		m_source = f;
