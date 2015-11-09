@@ -12,7 +12,6 @@ public class Kasse {
 
 	private static final Logger logger = Logger.getLogger(Kasse.class.getName());
 	
-	
 	private File m_source;
 	private File m_destination;
 	String baseName = "Kasse";
@@ -72,7 +71,7 @@ public class Kasse {
 	}
 	public static void main(String argv[]){
 		
-		if(argv.length == 0) {
+		if(argv.length != 0) {
 			ArgParser ag = new ArgParser(argv);
 				try {
 				boolean append = true;
