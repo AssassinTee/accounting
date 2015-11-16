@@ -92,7 +92,7 @@ public class Kasse {
 			}
 		}
 		logger.info("started logging");
-		Kasse a = new Kasse(new File(argv[1]), new File(argv[3]));
+		Kasse a = new Kasse(new File(""), new File(argv[3]));
 		a.Einzahlen("013579", 20, 40); 
 	}
 }
