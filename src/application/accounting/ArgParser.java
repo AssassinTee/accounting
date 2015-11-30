@@ -35,7 +35,58 @@ public class ArgParser {
     
     */
     private void parseArgs() {
-
+	StringBuffer sb = new StringBuffer();
+	
+	//Optionen
+	LongOpt[] opts = 
+	{
+	    new LongOpt("input-file", LongOpt.REQUIRED_ARGUMENT, sb, 'i'),
+	    new LongOpt("output-file", LongOpt.REQUIRED_ARGUMENT, sb, 'o'),
+	    new LongOpt("log-file", LongOpt.REQUIRED_ARGUMENT, sb, 'l'),
+	    new LongOpt("rate-of-interest", LongOpt.REQUIRED_ARGUMENT, sb, 'r'),
+	    new LongOpt("help", LongOpt.NO_ARGUMENT, null, 'h'),
+	    new LongOpt("version", LongOpt.NO_ARGUMENT, null, 'v'),
+	};
+	
+	
+	Getopt get = new Getopt("Buchhaltung", this.args, "i:o:l:r:hc", opts);
+	String arg = "";
+	while((c = get.getopt()) != -1) {
+		switch(c) {
+			case 'o':
+			  arg = get.getOptarg();
+			  this.outputFilename = arg;
+			  break;
+			  
+			case 'l':
+			  arg = get.getOptarg();
+			  this.logFilename = arg;
+			  break;
+			  
+			case 'r':
+			  arg = get.getOptarg();
+			  this.interest = arg;
+			  break;
+			  
+			case 'h':
+			  this.showHelp = true;
+			  break;
+			  
+			case 'v':
+			  this.showVersion = true;
+			  break;
+			  
+			case 'i':
+			  arg = get.getOptarg();
+			  this.inputFilename = arg;
+			  break;
+			  
+			default:
+			  this.nonOptions = this.nonOptions + ", " + c;
+			  break;
+		}
+	}
+	/*
         StringBuffer sb = null;
                                
         for ( int i = 0; i < args.length; i++ ) {
@@ -95,6 +146,7 @@ public class ArgParser {
         if ( sb != null ) {
             nonOptions = sb.toString();
         } // end of if ()
+        */
 
     } // end of method "parseArgs()"
 
