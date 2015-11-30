@@ -116,11 +116,6 @@ ausprobiert und (kennen) gelernt.
     </condition>
   </target>
   
-  <target name="clean" depends="delete-language-links">
-    <delete dir="build"/>
-    <delete dir="dist"/>
-  </target>
-  
   <path id="project.class.path">
     <pathelement path="./build/classes" />
     <pathelement path="./dist/accounting.jar" />
@@ -184,6 +179,4 @@ done
 exit 0
 </echo>
   </target>
-
->>>>>>> 782d4ab5627c312fffb5acdc4d5c9723caf9c914
 </project>

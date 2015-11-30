@@ -1,0 +1,16 @@
+Mon Nov 23 15:54:53 CET 2015 INFO read from file: src/data/testdata/test_err_00.in
+Mon Nov 23 15:54:53 CET 2015 INFO Schreibe in Datei: src/data/testdata/test_err_0.out
+Mon Nov 23 15:54:53 CET 2015 INFO Using Interest: 0.05%
+Mon Nov 23 15:54:53 CET 2015 FINE gelesene Zeile: 0 0 0 0 0
+Mon Nov 23 15:59:06 CET 2015 INFO read from file: src/data/testdata/test_err_00.in
+Mon Nov 23 15:59:06 CET 2015 INFO Schreibe in Datei: src/data/testdata/test_err_0.out
+Mon Nov 23 15:59:06 CET 2015 INFO Using Interest: 0.05%
+Mon Nov 23 15:59:06 CET 2015 FINE gelesene Zeile: 0 0 0 0 0
+Mon Nov 23 15:59:06 CET 2015 INFO read from file: src/data/testdata/test_err_01.in
+Mon Nov 23 15:59:06 CET 2015 INFO Schreibe in Datei: src/data/testdata/test_err_1.out
+Mon Nov 23 15:59:07 CET 2015 INFO Using Interest: 0.05%
+Mon Nov 23 15:59:07 CET 2015 FINE gelesene Zeile: Einfach nur Schwachsinn!
+Mon Nov 23 15:59:07 CET 2015 INFO read from file: src/data/testdata/test_err_02.in
+Mon Nov 23 15:59:07 CET 2015 INFO Schreibe in Datei: src/data/testdata/test_err_2.out
+Mon Nov 23 15:59:07 CET 2015 INFO Using Interest: 0.05%
+Mon Nov 23 15:59:07 CET 2015 FINE gelesene Zeile: 1230132013210332103213021320132121212121 1 -200000000000000 1202 12121212

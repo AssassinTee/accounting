@@ -26,6 +26,8 @@ public class Buchhaltung {
 	private static FileWriter outwriter = null;
 	
 	private static final Logger logger = Logger.getLogger(Buchhaltung.class.getName());
+	
+	public static String applicationVersion = "Id: <FILE>, version <COMMITHASHABBREVIATED> of <COMMITTERDATEISO8601> by <AUTHORNAME>";
 
 	public static void call_main(String args[]) throws IOException {
 		String filestr = "";
