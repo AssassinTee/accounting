@@ -120,6 +120,7 @@ ausprobiert und (kennen) gelernt.
     <pathelement path="./build/classes" />
     <pathelement path="./dist/accounting.jar" />
     <pathelement path="./dist/data/lang/" />
+    <pathelement path="./lib/java/java-getopt/" />
   </path>
 <!--  -->
   <property name="etc" value="dist/data/etc/" /> 

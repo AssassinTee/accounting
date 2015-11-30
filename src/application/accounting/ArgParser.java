@@ -1,5 +1,7 @@
 package application.accounting;
 
+import gnu.getopt.*;
+
 // Parses arguments from an array provided at object-initialisation
 public class ArgParser {
 
