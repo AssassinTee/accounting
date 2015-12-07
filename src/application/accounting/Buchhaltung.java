@@ -20,6 +20,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import java.math.BigDecimal;
+
 
 public class Buchhaltung {
 
@@ -154,8 +156,8 @@ public class Buchhaltung {
 		String id;
 		String lastName;
 		String firstName;
-		int startingMoney = 0;
-		int tmpMoney;
+		BigDecimal startingMoney=new BigDecimal(0);
+		BigDecimal tmpMoney = new BigDecimal(0);
 		int day;
 		Sparer tmp;
 		ArrayList<Sparer> sparer = new ArrayList<Sparer>();
@@ -205,7 +207,7 @@ public class Buchhaltung {
 				try {
 					day = Integer.parseInt(splits[i]);
 					tmpMoney = getIntValue(splits[i + 1]);
-					tmp.addTransaction(day, tmpMoney);
+					tmp.addTransaction(day, tmpMoney.intValue());
 				} catch (NumberFormatException e1) {
 					System.err.println(splits[i] + ";" + splits[i+1] + " is not a proper entry!");
 					System.exit(1);
@@ -227,13 +229,15 @@ public class Buchhaltung {
 		
 	}
 
-	public static int getIntValue(String number) {
+	public static BigDecimal getIntValue(String number) {
 		String split[] = number.split(",");
-		int value = Integer.parseInt(split[0]) * 100;
+		BigDecimal value = new BigDecimal(split[0]).multiply(new BigDecimal(100));
 		if (split.length == 2) {
 			// get the value after the comma
-			value += (split[1].length() == 2) ? (Integer.parseInt(split[1]))
-					: (Integer.parseInt(split[1]) * 10);
+			if(split[1].length() == 2)
+				value.add(new BigDecimal(split[1]));
+			else
+				value.add(new BigDecimal(split[1]).multiply(new BigDecimal(10)));
 		}
 
 		return value;

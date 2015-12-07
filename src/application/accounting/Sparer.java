@@ -1,6 +1,7 @@
 package application.accounting;
 
 import java.util.ArrayList;
+import java.math.BigDecimal;
 
 public class Sparer {
 
@@ -8,7 +9,7 @@ public class Sparer {
 	private String id;
 	private String last_name;
 	private String first_name;
-	private int starting_money;
+	private BigDecimal starting_money;
 	private ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 
 	public static void setZins(double newZins) {
@@ -16,7 +17,7 @@ public class Sparer {
 	}
 
 	public Sparer(String id, String last_name, String first_name,
-			int starting_money) {
+			BigDecimal starting_money) {
 		this.id = id;
 		this.last_name = last_name;
 		this.first_name = first_name;
@@ -53,7 +54,7 @@ public class Sparer {
 		ret.append(id + ';');
 		ret.append(this.last_name + ';');
 		ret.append(this.first_name + ';');
-		ret.append(this.starting_money / 100 + "," + this.starting_money % 100);
+		ret.append(this.starting_money.longValue() / 100 + "," + this.starting_money.longValue() % 100);
 		// we are assuming that there are no transactions left, when "sparer" is
 		// printed
 		return ret.toString();
@@ -63,14 +64,14 @@ public class Sparer {
 	 * clears the transactions and calculates the new starting money
 	 */
 	public void calcNewYear() {
-		int newMoney = 0;
+		BigDecimal newMoney = new BigDecimal(0);
 		for (int i = 0; i < this.transactions.size(); i++) {
-			newMoney += (transactions.get(i).getMoney())
-					* ((zins / 100)
-							* ((360 - this.transactions.get(i).getDay()) / 360) + 1);
+			newMoney.add(new BigDecimal(transactions.get(i).getMoney()).multiply(
+					new BigDecimal((zins / 100)
+							* ((360 - this.transactions.get(i).getDay()) / 360) + 1)));
 		}
 		this.transactions.clear();
-		newMoney += (this.starting_money * (1 + (zins / 100)));
+		newMoney.add(this.starting_money.multiply(new BigDecimal(1 + (zins / 100))));
 
 		this.starting_money = newMoney;
 	}
