@@ -12,6 +12,7 @@ public class ArgParser {
     private String outputFilename = null;
     private String logFilename = null;
     private String nonOptions = null;
+    private String interest = null;
 
     public ArgParser(String[] args) {
 
@@ -51,6 +52,7 @@ public class ArgParser {
 	
 	Getopt get = new Getopt("Buchhaltung", this.args, "i:o:l:r:hc", opts);
 	String arg = "";
+	int c;
 	while((c = get.getopt()) != -1) {
 		switch(c) {
 			case 'o':
